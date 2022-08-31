@@ -1,0 +1,3 @@
+#!/bin/bash
+ls -an
+5-listfilesdigitonly - Script displays current directory contents with user and grou ids
