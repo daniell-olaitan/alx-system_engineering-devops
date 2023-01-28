@@ -10,5 +10,5 @@ while (( i < 10 )); do
       else
 	   echo "Best School"
       fi
-      i++
+      (( i++ ))
 done
