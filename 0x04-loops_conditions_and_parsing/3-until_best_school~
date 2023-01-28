@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# This script is displaying "Best School" 10 times
-
-STR="Best School"
-i=0
-while ((i < 10)); do
-    echo "$STR"
-    ((i++))
-done
