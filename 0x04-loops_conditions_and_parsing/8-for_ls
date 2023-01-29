@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # displays the content of the current directory
 
-for line in $(find . -type f -name "*-*" | cut -d "-" -f 2); do
-    echo "$line"
+contents=$("ls")
+for line in $contents; do
+    echo "$line" | cut -d'-' -f2
 done
