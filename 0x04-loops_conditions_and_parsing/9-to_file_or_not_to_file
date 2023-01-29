@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 # gives information about the school file
 
-file="holbertonschool"
-if [ -e "$file" ]; then
+if [ -e "holbertonschool" ]; then
 	echo "holbertonschool file exits"
-	if [ -s "$file" ]; then
+	if [ -s "holbertonschool" ]; then
 		echo "holbertonschool file is not empty"
 	else
 		echo "holbertonschool file is empty"
 	fi
 
-	if [ -f "$file" ]; then
+	if [ -f "holbertonschool" ]; then
 		echo "holbertonschool is a regular file"
 	fi
 else
