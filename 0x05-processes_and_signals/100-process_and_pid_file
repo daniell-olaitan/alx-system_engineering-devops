@@ -4,7 +4,7 @@
 function Quit_Term_sig()
 {
     echo "I hate the kill command"
-    rm -f "FILE"
+    rm -f "$FILE"
     kill -SIGKILL "$$"
 }
 
