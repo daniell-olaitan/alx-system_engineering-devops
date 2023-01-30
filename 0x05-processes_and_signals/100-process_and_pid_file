@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# creates a file and inputs some texts in it
+
+function Quit_Term_sig()
+{
+    echo "I hate the kill command"
+    rm -f "FILE"
+    kill -SIGKILL "$$"
+}
+
+function Int_sig()
+{
+    echo "Y U no love me?!"
+}
+
+trap Quit_Term_sig SIGTERM SIGQUIT
+trap Int_sig SIGINT
+
+FILE=/var/run/myscript.pid
+echo "$$" > "$FILE"
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
