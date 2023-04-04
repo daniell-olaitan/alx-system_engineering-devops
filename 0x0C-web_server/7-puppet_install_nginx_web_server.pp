@@ -17,16 +17,16 @@ exec { 'configure firewall':
 }
 
 file { 'root file':
-  ensure => file,
-  source => 'Hello World!',
-  path   => '/var/www/html/index.html',
-  owner  => 'root',
-  group  => 'root',
-  mode   => '0644'
+  ensure  => file,
+  content => 'Hello World!',
+  path    => '/var/www/html/index.html',
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644'
 }
 
 exec { 'configure redirect':
-  command => "/usr/bin/sed -i '/server_name\ _;/c ${conf}' ${config}",
+  command => "/usr/bin/sed -i '/server_name _;/c ${conf}' ${config}",
 }
 
 exec { 'restart server':
