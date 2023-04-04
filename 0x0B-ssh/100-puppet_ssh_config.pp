@@ -1,16 +1,13 @@
 # Configure the SSH server to authenticates only through SSH keys
-include stdlib
 
-file_line { 'Turn off passwd auth':
-  ensure => present,
-  path   => '/etc/ssh/ssh_config',
-  line   => 'PasswordAuthentication no',
-  match  => '^PasswordAuthentication'
+$config = 'PasswordAuthentication no'
+$attr = 'PasswordAuthentication'
+
+exec { 'Turn off passwd auth':
+  command => "/usr/bin/sed -i '/${attr}/c ${config}' /etc/ssh/ssh_config",
 }
 
-file_line { 'Declare identity file':
-  ensure => present,
-  path   => '/etc/ssh/ssh_config',
-  line   => 'IdentityFile ~/.ssh/holberton',
-  match  => '^IdentityFile'
+  line   => ,
+exec { 'Declare identity file':
+  command => "/usr/bin/sed -i '/IdentityFile/c IdentityFile' ~/.ssh/school",
 }
