@@ -1,7 +1,7 @@
 # Install and configures Nginx using Puppet
 
 $link = 'https://www.youtube.com/watch?v=QH2-TGUlwu4'
-$conf = "server_name\ _;\n\trewrite ^/redirect_me/?$ ${link} permanent;"
+$conf = "\tserver_name _;\\n\trewrite ^/redirect_me/?$ ${link} permanent;"
 $config = '/etc/nginx/sites-available/default'
 
 exec { 'update packages':
@@ -26,7 +26,7 @@ file { 'root file':
 }
 
 exec { 'configure redirect':
-  command => "/usr/bin/sed -i \"s|^server_name\ _;|${conf}|\" ${config}"
+  command => "/usr/bin/sed -i '/server_name\ _;/c ${conf}' ${config}",
 }
 
 exec { 'restart server':
