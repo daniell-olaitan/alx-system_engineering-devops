@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# configures nginx to respond with a customized header
+
+apt update
+apt install -y nginx
+ufw allow 'Nginx HTTP'
+echo "Hello World!" > /var/www/html/index.html
+
+config_file='/etc/nginx/nginx.conf'
+search='http {'
+config="${search}\n\tadd_header X-Served-By"
+if ! grep -q "$add_header X-Served-By" $config_file; then
+   sed -i "s|$search|${config} \"${HOSTNAME}\";|" $config_file
+fi
+
+service nginx restart
