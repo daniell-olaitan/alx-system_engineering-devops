@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Configures HAProxy so that it sends requests to two websites
 
 # Update packages
