@@ -22,7 +22,6 @@ f_config="$f_name\n\t$f_mode\n\t$f_bind\n\t$f_default"
 b_name='backend alx_web_server'
 b_mode='mode http'
 b_balance='balance roundrobin'
-b_option1='option httpchk'
 b_server1='server web-01 54.157.149.148:80 check'
 b_server2='server web-02 100.25.167.197:80 check'
 b_config="$b_name\n\t$b_mode\n\t$b_balance\n\t$b_option1\n\t$b_server1 \
