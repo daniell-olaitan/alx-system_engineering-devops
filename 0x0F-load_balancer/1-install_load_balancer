@@ -1,37 +1,37 @@
 #!/usr/bin/env bash
-# 
-# Configure Nginx so that its HTTP response contains
-# a custom header
-#
+
+# Configures HAProxy so that it sends requests to two websites
 
 # Update packages
-sudo apt update
+apt update
 
 # Add HAProxy PPA
-sudo apt install -y software-properties-common
-sudo add-apt-repository ppa:vbernat/haproxy-1.8 -y
-sudo apt update
+apt-get install -y --no-install-recommends software-properties-common
+add-apt-repository ppa:vbernat/haproxy-2.0 -y
 
 # Install HAProxy
-sudo apt install -y haproxy=1.8.\*
+apt-get install -y haproxy=2.0.\*
 
-hgproxy_conf_file="/etc/haproxy/haproxy.cfg"
+# Configures HAProxy
+config_file='/etc/haproxy/haproxy.cfg'
+f_name='frontend alx_web'
+f_bind='bind *:80'
+f_mode='mode http'
+f_default='default_backend alx_web_server'
+f_config="$f_name\n\t$f_mode\n\t$f_bind\n\t$f_default"
 
-# Configure Load Balancer
-fname="frontend http"
-fbind="bind *:80"
-fmode="mode http"
-fdefault="default_backend web-backend"
-frontend="$fname\n\t$fbind\n\t$fmode\n\t$fdefault\n"
+b_name='backend alx_web_server'
+b_mode='mode http'
+b_balance='balance roundrobin'
+b_option1='option httpchk'
+b_server1='server web-01 54.157.149.148:80 check'
+b_server2='server web-02 100.25.167.197:80 check'
+b_config="$b_name\n\t$b_mode\n\t$b_balance\n\t$b_option1\n\t$b_server1 \
+\n\t$b_server2"
 
-bname="backend web-backend"
-bbalance="balance roundrobin"
-bserver1="server web1 35.229.93.37:80 check"
-bserver2="server web2 54.196.213.127:80 check"
-backend="$bname\n\t$bbalance\n\t$bserver1\n\t$bserver2"
+if ! grep -q "$f_name" $config_file; then
+    echo -e "\n$f_config" >> $config_file
+fi
 
-sudo sed -i "$ a $frontend" $hgproxy_conf_file
-sudo sed -i "$ a $backend" $hgproxy_conf_file
-
-# Restart HAProxy
-sudo service haproxy restart
+echo -e "\n$b_config" >> $config_file
+service haproxy restart
