@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Gathers data from an API
-"""
+"""Script gathers data from a given API (REST API)"""
 
 import requests
 from sys import argv
