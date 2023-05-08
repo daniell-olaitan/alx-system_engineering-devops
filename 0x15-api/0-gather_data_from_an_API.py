@@ -1,31 +1,14 @@
 #!/usr/bin/python3
-"""Script gathers data from a given API (REST API)"""
-
+"""Gathers data from an API (REST API)"""
 import requests
-from sys import argv
+import sys
 
+if __name__ == "__main__":
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "users/{}".format(sys.argv[1])).json()
+    todos = requests.get(url + "todos", params={"userId": sys.argv[1]}).json()
 
-if __name__ == '__main__':
-    if argv[1].isdigit():
-        id = int(argv[1])
-        user_url = f'https://jsonplaceholder.typicode.com/users/{argv[1]}'
-        todos_url = f'https://jsonplaceholder.typicode.com/todos'
-        r = requests.get(user_url)
-        name = r.json().get('name')
-        r = requests.get(todos_url)
-        todos = r.json()
-        if name is not None:
-            titles = []
-            total = 0
-            total_done = 0
-            for todo in todos:
-                if id == todo.get("userId"):
-                    total += 1
-                    if todo.get("completed"):
-                        total_done += 1
-                        titles.append(todo.get("title"))
-
-            print("Employee {} is done with tasks({}/{}):".format(
-                name, total_done, total))
-            for title in titles:
-                print("\t {}".format(title))
+    completed = [t.get("title") for t in todos if t.get("completed") is True]
+    print("Employee {} is done with tasks({}/{}):".format(
+        user.get("name"), len(completed), len(todos)))
+    [print("\t {}".format(c)) for c in completed]
