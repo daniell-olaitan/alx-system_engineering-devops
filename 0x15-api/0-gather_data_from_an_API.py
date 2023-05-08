@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
-gathers data from an API
+Gathers data from an API
 """
-
 
 import requests
 from sys import argv
+
 
 if __name__ == '__main__':
     if argv[1].isdigit():
