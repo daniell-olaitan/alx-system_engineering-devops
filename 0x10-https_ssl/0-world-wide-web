@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Script audits domains and subdomains to check their DNS type
+
+sub="$2"
+
+audit_domain() {
+    record=$(dig "$1" | grep -A1 'ANSWER SECTION:' | tail -n 1)
+
+    echo "$record" |
+	awk -v subd="$sub" '{print "The subdomain", subd, "is a", $4, "record and points to", $5}'
+    return
+}
+
+audit_subs() {
+    subdomains=(www lb-01 web-01 web-02)
+
+    for sub in "${subdomains[@]}"; do
+	host="$sub.$1"
+	audit_domain "$host"
+    done
+    return
+}
+
+if [ "$1" ] && [ "$2" ]; then
+    audit_domain "$2.$1"
+elif [ "$1" ]; then
+    audit_subs "$1"
+fi
