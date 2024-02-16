@@ -1,5 +1,6 @@
-# fixes wordpress typo
+# fixes worpress apache typo
 
-exec {'fix-apache-word-press':
-  command => '/usr/bin/sed -i "s/phpp/php/g" /var/www/html/wp-settings.php';
+exec { 'fix-wordpress-apache':
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => '/usr/local/bin/:/bin/'
 }
